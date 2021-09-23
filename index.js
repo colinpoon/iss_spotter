@@ -22,5 +22,5 @@ fetchISSFlyOverTimes({ latitude: '49.27670', longitude: '-123.13000' }, (err, da
     console.log('ERROR...', err);
     return;
   }
-  console.log('Returned durations & rise times:', data);
+  console.log('Returned fly over times:', data);
 });
