@@ -34,14 +34,13 @@ const fetchMyIP = function(cb) {
 };
 
 const fetchCoordsByIP = function(ip, cb) {
-  request('https://api64.ipify.org/?format=json', (error, response, body) => {
+  request(`https://api64.ipify.org/?format=json/${ip}`, (error, response, body) => {
     if (error) {
       cb(error, null);
       return;
     }
     if (response.statusCode !== 200) {
-      const msg = `Status Code ${response.statusCode} when fetching coordinates for IP. Response: ${body}`;
-      cb(error(msg), null);
+      cb(Error(`Status Code ${response.statusCode} when fetching IP: ${body}`), null);
       return;
     }
 
@@ -62,8 +61,7 @@ const fetchISSFlyOverTimes = function(coords, cb) {
       return;
     }
     if (response.statusCode !== 200) {
-      const msg = `Status Code ${response.statusCode} when fetching coordinates for IP. Response: ${body}`;
-      cb(error(msg), null);
+      cb(Error(`Status Code ${response.statusCode} when fetching IP: ${body}`), null);
       return;
     }
     const output = JSON.parse(body).response;
