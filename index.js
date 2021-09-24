@@ -19,37 +19,22 @@ const { nextISSTimesForMyLocation } = require('./iss');
 //   });
 // };
 
-nextISSTimesForMyLocation((err, passTimes) => {
-  if (err) {
-    return console.log("It didn't work!", err);
+const printPassTimes = function(passTimes) {
+  for (const pass of passTimes) {
+    const datetime = new Date(0);
+    datetime.setUTCSeconds(pass.risetime);
+    const duration = pass.duration;
+    console.log(`Next pass at ${datetime} for ${duration} seconds!`);
+  }
+};
+
+nextISSTimesForMyLocation((error, passTimes) => {
+  if (error) {
+    return console.log("It didn't work!", error);
   }
   // success, print out the deets!
-  for(time of passTimes) {
-    const day = new Date(time['risetime'] * 1000).toLocaleString("en-US");
-    console.log(`Next pass at ${day} (Pacific Daylight Time) for ${time.duration} seconds!`);
-  }
+  printPassTimes(passTimes);
 });
-
-
-
-// const printPassTimes = function(passTimes) {
-//   for (const pass of passTimes) {
-//     const datetime = new Date(0);
-//     datetime.setUTCSeconds(pass.risetime);
-//     const duration = pass.duration;
-//     console.log(`Next pass at ${datetime} for ${duration} seconds!`);
-//   }
-// };
-
-// nextISSTimesForMyLocation((error, passTimes) => {
-//   if (error) {
-//     return console.log("It didn't work!", error);
-//   }
-//   // success, print out the deets!
-//   printPassTimes(passTimes);
-// });
-
-
 
 // fetchMyIP((error, ip) => {
 //   if (error) {
@@ -74,4 +59,16 @@ nextISSTimesForMyLocation((err, passTimes) => {
 //     return;
 //   }
 //   console.log('Returned fly over times:', data);
+// });
+
+
+// nextISSTimesForMyLocation((err, passTimes) => {
+//   if (err) {
+//     return console.log("It didn't work!", err);
+//   }
+//   // success, print out the deets!
+//   for(time of passTimes) {
+//     const day = new Date(time['risetime'] * 1000).toLocaleString("en-US");
+//     console.log(`Next pass at ${day} (Pacific Daylight Time) for ${time.duration} seconds!`);
+//   }
 // });
